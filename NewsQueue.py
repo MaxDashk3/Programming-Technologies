@@ -29,7 +29,7 @@ def view_all(queue):
         raise ValueError("Queue is empty")
 
     for i in queue:
-        print(i.title,"\n",i.content)
+        print(i.title,"\n",i.content,"\n")
 
 #gets index of news by its title (returns -1 if not found)
 def title_index(title, queue):
