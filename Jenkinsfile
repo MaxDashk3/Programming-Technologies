@@ -1,6 +1,9 @@
 pipeline {
     options {timestamps()}
     agent none
+    environment{
+        DOCKER_CREDS = credentials('docker_hub')
+    }
     stages{
         stage ('Check scm'){
             agent any
@@ -33,6 +36,18 @@ pipeline {
                 }
                 failure {
                     echo "Tests failed"
+                }
+            }
+        }
+        stage('Publish image') {
+            agent any
+            steps{
+                sh 'echo $DOCKER_CREDS_PSW | docker login --username $DOCKER_CREDS_USR --password-stdin'
+                sh 'docker build -t maxdashk3/news_queue:latest --push .'
+            }
+            post {
+                always {
+                    sh 'docker logout'
                 }
             }
         }
