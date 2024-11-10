@@ -5,6 +5,14 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 5.0"
     }
+
+  }
+  backend "s3 " {
+    bucket = "lab6-my-tf-state"
+    key = "terraform.tfstate"
+    region = "eu-central-1"
+    dynamodb_table = "lab6-my-tf-lockid" 
+
   }
 }
 
