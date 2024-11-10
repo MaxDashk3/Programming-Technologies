@@ -61,7 +61,7 @@ resource "aws_instance" "webapp_instance" {
   sudo usermod -aG docker ubuntu
   newgrp docker
   docker pull maxdashk3/news_queue:latest
-  docker run -it maxdashk3/news_queue:latest
+  docker run -id maxdashk3/news_queue:latest
   EOF
   tags = {
     Name = "webapp_instance"
