@@ -53,6 +53,16 @@ resource "aws_instance" "webapp_instance" {
   ami           = "ami-0669b163befffbdfc"
   instance_type = "t2.micro"
   security_groups= ["web_app"]
+  user_data = <<-EOF
+  #!/bin/bash
+  curl -fsSL https://get.docker.com -o get-docker.sh
+  sudo sh get-docker.sh
+  sudo groupadd docker
+  sudo usermod -aG docker ubuntu
+  newgrp docker
+  docker pull maxdashk3/news_queue:latest
+  docker run -it maxdashk3/news_queue:latest
+  EOF
   tags = {
     Name = "webapp_instance"
   }
